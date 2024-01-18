@@ -1,6 +1,15 @@
+import os
+
+# 获取当前文件的绝对路径
+current_file_path = os.path.abspath(__file__)
+
+model_path = os.path.join(os.path.dirname(current_file_path), 'moka-ai/m3e-base')
+
 from sentence_transformers import SentenceTransformer
+
 print('time to load model')
-model = SentenceTransformer('Langchain-Chatchat/moka-ai/m3e-base')
+
+model = SentenceTransformer(model_path)
 
 print('time to encode')
 #Our sentences we like to encode
