@@ -29,3 +29,5 @@ for sentence, embedding in zip(sentences, embeddings):
     print("Sentence:", sentence)
     print("Embedding:", embedding)
     print("")
+
+print('success')
