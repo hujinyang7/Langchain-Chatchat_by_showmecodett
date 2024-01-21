@@ -1,4 +1,37 @@
+transformers==4.36.2
 sentence_transformers==2.2.2
 
+
 langchain==0.0.352
+uvicorn>=0.24.0.post1
+pydantic==1.10.13
+fschat==0.2.34
+openai~=1.6.0
+fastapi>=0.105
+SQLAlchemy==2.0.19
+tiktoken~=0.5.2
+unstructured[all-docs]==0.11.0
+rapidocr_onnxruntime==1.3.8
+PyMuPDF~=1.23.8
+sse_starlette
+strsimpy>=0.2.1
+markdownify>=0.11.6
+
+
+
+jq>=1.6.0 # for .json and .jsonl files. suggest `conda install jq` on windows
+
+zhipuai>=1.0.7, <=2.0.0 # zhipu
+
+
+duckduckgo-search>=3.9.9
+
+streamlit~=1.29.0 # do remember to add streamlit to environment variables if you use windows
+streamlit-option-menu>=0.3.6
+streamlit-chatbox==1.1.11
+streamlit-modal>=0.1.0
+streamlit-aggrid>=0.3.4.post3
+
 chromadb==0.4.13
+
+python-dotenv

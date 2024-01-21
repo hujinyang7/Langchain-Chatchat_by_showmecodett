@@ -3,8 +3,8 @@ import os
 # 默认使用的知识库
 DEFAULT_KNOWLEDGE_BASE = "samples"
 
-# 默认向量库/全文检索引擎类型。可选：faiss, milvus(离线) & zilliz(在线), pgvector,全文检索引擎es
-DEFAULT_VS_TYPE = "faiss"
+# 默认向量库/全文检索引擎类型。可选：faiss, milvus(离线) & zilliz(在线), pgvector, 全文检索引擎es, chromadb
+DEFAULT_VS_TYPE = "chromadb"
 
 # 缓存向量库数量（针对FAISS）
 CACHED_VS_NUM = 1
@@ -19,7 +19,7 @@ CHUNK_SIZE = 250
 OVERLAP_SIZE = 50
 
 # 知识库匹配向量数量
-VECTOR_SEARCH_TOP_K = 3
+VECTOR_SEARCH_TOP_K = 1
 
 # 知识库匹配的距离阈值，取值范围在0-1之间，SCORE越小，距离越小从而相关度越高，
 # 取到1相当于不筛选，实测bge-large的距离得分大部分在0.01-0.7之间，
@@ -102,7 +102,8 @@ kbs_config = {
         "index_name": "test_index",
         "user": "",
         "password": ""
-    }
+    },
+    "chromadb": {}
 }
 
 # TextSplitter配置项，如果你不明白其中的含义，就不要修改。
@@ -131,7 +132,7 @@ text_splitter_dict = {
 }
 
 # TEXT_SPLITTER 名称
-TEXT_SPLITTER_NAME = "ChineseRecursiveTextSplitter"
+TEXT_SPLITTER_NAME = "RecursiveCharacterTextSplitter"
 
 # Embedding模型定制词语的词表文件
 EMBEDDING_KEYWORD_FILE = "embedding_keywords.txt"

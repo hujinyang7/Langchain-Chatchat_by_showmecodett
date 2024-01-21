@@ -19,7 +19,6 @@ from pathlib import Path
 from server.utils import run_in_thread_pool, get_model_worker_config
 import json
 from typing import List, Union,Dict, Tuple, Generator
-import chardet
 
 
 def validate_kb_name(knowledge_base_id: str) -> bool:
@@ -165,6 +164,7 @@ def get_loader(loader_name: str, file_path: str, loader_kwargs: Dict = None):
         loader_kwargs.setdefault("autodetect_encoding", True)
     elif loader_name == "CSVLoader":
         if not loader_kwargs.get("encoding"):
+            import chardet
             # 如果未指定 encoding，自动识别文件编码类型，避免langchain loader 加载文件报编码错误
             with open(file_path, 'rb') as struct_file:
                 encode_detect = chardet.detect(struct_file.read())

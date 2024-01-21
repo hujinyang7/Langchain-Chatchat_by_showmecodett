@@ -47,6 +47,7 @@ class SupportedVSType:
     ZILLIZ = 'zilliz'
     PG = 'pg'
     ES = 'es'
+    CHROMADB = 'chromadb'
 
 
 class KBService(ABC):
@@ -323,6 +324,9 @@ class KBServiceFactory:
         elif SupportedVSType.DEFAULT == vector_store_type:  # kb_exists of default kbservice is False, to make validation easier.
             from server.knowledge_base.kb_service.default_kb_service import DefaultKBService
             return DefaultKBService(kb_name)
+        elif SupportedVSType.CHROMADB == vector_store_type:
+            from server.knowledge_base.kb_service.chromadb_kb_service import ChromaKBService
+            return ChromaKBService(kb_name, embed_model=embed_model)
 
     @staticmethod
     def get_service_by_name(kb_name: str) -> KBService:
@@ -423,6 +427,7 @@ class EmbeddingsFunAdapter(Embeddings):
     def embed_query(self, text: str) -> List[float]:
         embeddings = embed_texts(texts=[text], embed_model=self.embed_model, to_query=True).data
         query_embed = embeddings[0]
+        return query_embed
         query_embed_2d = np.reshape(query_embed, (1, -1))  # 将一维数组转换为二维数组
         normalized_query_embed = normalize(query_embed_2d)
         return normalized_query_embed[0].tolist()  # 将结果转换为一维数组并返回

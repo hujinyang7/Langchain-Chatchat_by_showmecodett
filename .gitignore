@@ -174,4 +174,4 @@ cython_debug/
 .DS_Store
 
 
-moka-ai
+_models/*
