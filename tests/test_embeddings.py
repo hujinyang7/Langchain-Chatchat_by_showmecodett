@@ -38,9 +38,22 @@ EMBEDDING_MODEL = "m3e-base"
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 hugging_face_embeddings = HuggingFaceEmbeddings(model_name=f'{MODEL_ROOT_PATH}/moka-ai/{EMBEDDING_MODEL}')
 
+
+def compare_float_arrays(arr1, arr2):
+    if len(arr1) != len(arr2):
+        return False
+
+    for a, b in zip(arr1, arr2):
+        if round(a, 2) != round(b, 2):
+            return False
+
+    return True
+
+
 for i in range(len(sentences)):
     print("Sentence:", sentences[i])
-    print('is_same', sentence_transformer_embeddings[i] == hugging_face_embeddings.embed_query(sentences[i]))
+    print("SentenceTransformer:", sentence_transformer_embeddings[i][:5])
+    print('is_same', compare_float_arrays(sentence_transformer_embeddings[i], hugging_face_embeddings.embed_query(sentences[i])))
     print("")
 
 print('success')
