@@ -428,9 +428,6 @@ class EmbeddingsFunAdapter(Embeddings):
         embeddings = embed_texts(texts=[text], embed_model=self.embed_model, to_query=True).data
         query_embed = embeddings[0]
         return query_embed
-        query_embed_2d = np.reshape(query_embed, (1, -1))  # 将一维数组转换为二维数组
-        normalized_query_embed = normalize(query_embed_2d)
-        return normalized_query_embed[0].tolist()  # 将结果转换为一维数组并返回
 
     async def aembed_documents(self, texts: List[str]) -> List[List[float]]:
         embeddings = (await aembed_texts(texts=texts, embed_model=self.embed_model, to_query=False)).data
