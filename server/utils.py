@@ -422,6 +422,8 @@ def webui_address() -> str:
     from configs.server_config import WEBUI_SERVER
 
     host = WEBUI_SERVER["host"]
+    if host == "0.0.0.0":
+        host = "127.0.0.1"
     port = WEBUI_SERVER["port"]
     return f"http://{host}:{port}"
 

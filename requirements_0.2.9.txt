@@ -21,7 +21,7 @@ markdownify>=0.11.6
 
 jq>=1.6.0 # for .json and .jsonl files. suggest `conda install jq` on windows
 
-zhipuai>=1.0.7, <=2.0.0 # zhipu
+zhipuai=1.0.7
 
 
 duckduckgo-search>=3.9.9

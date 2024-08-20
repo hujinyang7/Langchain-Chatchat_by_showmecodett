@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
 
-from openai import OpenAI
+# from openai import OpenAI
 
 
 # client = OpenAI(
@@ -26,7 +26,9 @@ from openai import OpenAI
 
 
 import zhipuai
+print(os.getenv('ZHIPU_API_KEY'))
 zhipuai.api_key = os.getenv('ZHIPU_API_KEY')
+
 response = zhipuai.model_api.invoke(
     model="chatglm_turbo",  # 填写需要调用的模型名称
     prompt=[
