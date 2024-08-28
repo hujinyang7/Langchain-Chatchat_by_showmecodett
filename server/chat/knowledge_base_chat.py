@@ -77,6 +77,7 @@ async def knowledge_base_chat(query: str = Body(..., description="用户输入",
             max_tokens=max_tokens,
             callbacks=[callback],
         )
+        # 9.查询向量数据库获取与输入最相关的向量信息
         docs = await run_in_threadpool(search_docs,
                                        query=query,
                                        knowledge_base_name=knowledge_base_name,
@@ -84,6 +85,7 @@ async def knowledge_base_chat(query: str = Body(..., description="用户输入",
                                        score_threshold=score_threshold)
 
         # 加入reranker
+        # 是否需要重新排序
         if USE_RERANKER:
             from server.reranker.reranker import LangchainReranker
             reranker_model_path = MODEL_PATH["reranker"].get(RERANKER_MODEL,"BAAI/bge-reranker-large")
@@ -100,12 +102,14 @@ async def knowledge_base_chat(query: str = Body(..., description="用户输入",
             print("---------after rerank------------------")
             print(docs)
         context = "\n".join([doc.page_content for doc in docs])
-
-        if len(docs) == 0:  # 如果没有找到相关文档，使用empty模板
+        # 12.根据查询到向量信息来选择使用哪一个 prompt 模板
+        if len(docs) == 0:
+            # 如果没有找到相关文档，使用empty模板
             prompt_template = get_prompt_template("knowledge_base_chat", "empty")
         else:
             prompt_template = get_prompt_template("knowledge_base_chat", prompt_name)
         input_msg = History(role="user", content=prompt_template).to_msg_template(False)
+        # 将模板和历史信息封装成chat_prompt
         chat_prompt = ChatPromptTemplate.from_messages(
             [i.to_msg_template() for i in history] + [input_msg])
 
@@ -117,6 +121,7 @@ async def knowledge_base_chat(query: str = Body(..., description="用户输入",
             callback.done),
         )
 
+        # 根据向量数据库中查询到的信息，生成来源文档信息
         source_documents = []
         for inum, doc in enumerate(docs):
             filename = doc.metadata.get("source")

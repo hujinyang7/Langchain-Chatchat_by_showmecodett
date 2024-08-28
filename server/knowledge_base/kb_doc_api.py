@@ -155,7 +155,7 @@ def upload_docs(
     failed_files = {}
     file_names = list(docs.keys())
 
-    # 先将上传的文件保存到磁盘
+    # 1.先将上传的文件保存到磁盘
     for result in _save_files_in_thread(files, knowledge_base_name=knowledge_base_name, override=override):
         filename = result["data"]["file_name"]
         if result["code"] != 200:
@@ -280,6 +280,7 @@ def update_docs(
                                                zh_title_enhance=zh_title_enhance):
         if status:
             kb_name, file_name, new_docs = result
+            # 5&6.将切分好的文本块调用embedding模型并存入向量数据库
             kb_file = KnowledgeFile(filename=file_name,
                                     knowledge_base_name=knowledge_base_name)
             kb_file.splited_docs = new_docs

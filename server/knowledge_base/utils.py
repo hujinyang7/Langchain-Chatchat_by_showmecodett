@@ -307,6 +307,7 @@ class KnowledgeFile:
             return []
         if self.ext not in [".csv"]:
             if text_splitter is None:
+                # 获取合适的文本切分器
                 text_splitter = make_text_splitter(splitter_name=self.text_splitter_name, chunk_size=chunk_size,
                                                    chunk_overlap=chunk_overlap)
             if self.text_splitter_name == "MarkdownHeaderTextSplitter":
@@ -332,7 +333,9 @@ class KnowledgeFile:
             text_splitter: TextSplitter = None,
     ):
         if self.splited_docs is None or refresh:
+            # 2.将文件转化成文本
             docs = self.file2docs()
+            # 3.将文本切分为文本块
             self.splited_docs = self.docs2texts(docs=docs,
                                                 zh_title_enhance=zh_title_enhance,
                                                 refresh=refresh,

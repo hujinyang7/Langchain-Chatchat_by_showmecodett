@@ -366,6 +366,7 @@ def dialogue_page(api: ApiRequest, is_lite: bool = False):
                         chat_box.update_msg(text, element_index=1)
                 chat_box.update_msg(ans, element_index=0, streaming=False)
                 chat_box.update_msg(text, element_index=1, streaming=False)
+            # 8.前端查询知识库
             elif dialogue_mode == "知识库问答":
                 chat_box.ai_say([
                     f"正在查询知识库 `{selected_kb}` ...",

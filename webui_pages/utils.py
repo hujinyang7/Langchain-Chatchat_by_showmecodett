@@ -582,6 +582,7 @@ class ApiRequest:
         )
         return self._get_response_value(response)
 
+    # 0.前端上传文档
     def upload_kb_docs(
         self,
         files: List[Union[str, Path, bytes]],
